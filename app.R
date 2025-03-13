@@ -14,7 +14,7 @@ library(fontawesome)
 library(scales)
 library(plotly)
 
-committee_list <- read_csv("C:\\Users\\geiss\\OneDrive\\Desktop\\CascadiaR_CFP_app\\CascadiaR_CFP\\data\\Committee_list.csv") %>%
+committee_list <- read_csv("data/Committee_list.csv") %>%
   mutate_if(is.character, utf8::utf8_encode)
 
 # Define UI for application that draws a histogram
