@@ -14,8 +14,12 @@ library(fontawesome)
 library(scales)
 library(plotly)
 
-committee_list <- read_csv("data/Committee_list.csv") %>%
-  mutate_if(is.character, utf8::utf8_encode)
+committee_list <- read_rds("data/Committee_list.rds")
+  
+# committee_list <- read_csv("data/Committee_list.csv") %>%
+#   mutate_if(is.character, utf8::utf8_encode)
+
+CascadiaRConf2025_Submissions.rds <- read_rds("data/CascadiaRConf2025_Submissions.rds")
 
 # Define UI for application that draws a histogram
 ui <- page_sidebar(
@@ -26,7 +30,7 @@ ui <- page_sidebar(
     # Sidebar with a slider input for number of bins 
   sidebar = sidebar(
     
-    selectizeInput("reviewer_name", label = "Reviewer Name:", choices = committee_list %>% pull(Name), 
+    selectizeInput("reviewer_name", label = "Reviewer Name:", choices = c("Select", committee_list %>% pull(Name)), 
                    selected = NULL, multiple = FALSE, options = NULL)#,
   ),
   
@@ -62,15 +66,15 @@ ui <- page_sidebar(
 
                 p("Your job is to read the title and abstract, then score the talk on these criteria:"),
 
-                strong("The topic (1-5) —"), div("this is a combination of the proportion of the R community 
+                strong("The topic (1-5) —"), div("This is a combination of the proportion of the R community 
                 that’s likely to be interested in the topic, and how much impact the talk will 
                 have on their data science practice.  Scoring criteria:"),
                 
-                p("5 = likely to be of great interest to a wide swathe of the R community and 
+                p("5 = Likely to be of great interest to a wide swathe of the R community and 
                 the talk will have an impact on their day-to-day life."),
-                p("3 = high interest but low impact OR high impact but only to a smaller group 
+                p("3 = High interest but low impact OR high impact but only to a smaller group 
                 of people."),
-                p("1 = of very limited or specialised interest; unlikely to have impact on 
+                p("1 = Of very limited or specialised interest; unlikely to have impact on 
                 listeners’ practice of data science."),
 
                 strong("Cascadia Region?"),
@@ -94,13 +98,67 @@ ui <- page_sidebar(
                 proposal."),
 
                 strong("Please complete your reviews by 4pm PT March 22.", style = "color:red")
-                
-
  
               )
     ),
-    nav_panel("Timeliness", 
-              
+    # lapply(1:5, function(i) {
+    #   tabPanel(
+    #     title=paste0('tab', i), 
+    #     textOutput(paste0('a',i))
+    #   )
+    # }) 
+    nav_panel("CFP1001", 
+              #"Topic (1-5)" "Cascadia Region" "Representation" "Golden Buzzer"
+              card(
+                strong("ID"),	
+                p(""),
+                
+                strong("Timestamp"),	
+                p(""),	
+                
+                strong("Email Address"),	
+                p(""),	
+                
+                strong("Your name (first and last)"),	
+                p(""),	
+                
+                strong("Alternative Contact Information (i.e. second email, phone)"),	
+                p(""),	
+                
+                strong("Your affiliation and/or geographic location:"),	
+                p(""),	
+                  
+                strong("Are you currently a student or graduated in the last year?"),	
+                p(""),	
+                  
+                strong("Travel responsibility:"),	
+                p(""),	
+                  
+                strong("Talk type:"),	
+                p(""),	
+                  
+                strong("Talk title:"),	
+                p(""),	
+                  
+                strong("Abstract (maximum of 500 words):"),	
+                p(""),	
+                  
+                strong("Who is the intended audience for your talk?"),	
+                p(""),	
+                  
+                strong("LinkedIn	X, Mastodon or other handle(s)"),	
+                p(""),	
+                
+                strong("Personal Website"),	
+                p(""),	
+                
+                strong("Please tell us about your experience with R and public speaking."),	
+                p(""),	
+                  
+                strong("Is there anything else you think we should know about you or your application?"),	
+                p("")
+              )
+                  
     ),
     nav_panel("Completeness"
               
